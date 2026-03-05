@@ -1,104 +1,469 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* =============================================
+   PIANO VIRTUAL — Concert Grand
+   Aesthetic: Luxury Dark / Art Deco
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
+/* === RESET & BASE === */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+:root {
+    --gold:        #c9a96e;
+    --gold-light:  #e8c98a;
+    --gold-dim:    #8a6a38;
+    --ebony:       #0d0d0e;
+    --ebony-mid:   #161618;
+    --ebony-lift:  #1e1e21;
+    --ebony-edge:  #2a2a2e;
+    --ivory:       #f7f3ec;
+    --ivory-warm:  #ede8de;
+    --ivory-dim:   #d4cfc4;
+    --shadow:      rgba(0,0,0,0.7);
+    --glow:        rgba(201,169,110,0.15);
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Cormorant Garamond', Georgia, serif;
+}
+
+html { font-size: 16px; }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #e6f3ff;
-  font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 0%, #1a1410 0%, #0a0a0b 60%, #060607 100%);
+    font-family: var(--font-body);
+    color: var(--gold);
+    overflow: hidden;
 }
 
-.piano-container {
-  background-color: #1a1a1a;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  width: 800px;
+/* === AMBIENT GLOW === */
+.ambient-glow {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(201,169,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
+/* === WRAPPER === */
+.piano-wrapper {
+    position: relative;
+    z-index: 1;
+    width: min(860px, 96vw);
+    animation: fadeIn 1.2s ease both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === HEADER === */
 .piano-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  color: white;
-  padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 28px 20px;
+    background: linear-gradient(180deg, #1c1a16 0%, #161614 100%);
+    border: 1px solid rgba(201,169,110,0.18);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-icon {
+    font-size: 2.2rem;
+    color: var(--gold);
+    opacity: 0.7;
+    line-height: 1;
 }
 
 .title {
-  font-size: 1.2em;
-  font-weight: bold;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
 }
 
-.volume-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.12em;
+    margin-top: 2px;
+}
+
+/* === CONTROLS === */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+}
+
+/* Volume Slider */
+.slider-track {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .volume-slider {
-  width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 110px;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold) var(--val, 50%), var(--ebony-edge) var(--val, 50%));
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
 }
 
-.switch {
-  margin-left: 10px;
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    box-shadow: 0 0 8px rgba(201,169,110,0.5);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 14px rgba(201,169,110,0.7);
+}
+
+.volume-value {
+    font-size: 0.72rem;
+    color: var(--gold-dim);
+    min-width: 32px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+
+.toggle-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-track {
+    display: flex;
+    align-items: center;
+    width: 42px;
+    height: 22px;
+    background: var(--ebony-edge);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 11px;
+    padding: 0 3px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.toggle-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    transition: transform 0.25s ease, background 0.25s ease;
+    flex-shrink: 0;
+}
+
+.toggle-switch input:checked + .toggle-track {
+    background: rgba(201,169,110,0.15);
+    border-color: var(--gold);
+}
+
+.toggle-switch input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(19px);
+    background: var(--gold-light);
+    box-shadow: 0 0 8px rgba(232,201,138,0.5);
+}
+
+/* === PIANO BODY === */
+.piano-body {
+    background: var(--ebony);
+    border-left: 1px solid rgba(201,169,110,0.18);
+    border-right: 1px solid rgba(201,169,110,0.18);
+    padding: 0 24px 12px;
+    position: relative;
+}
+
+.piano-lid {
+    height: 14px;
+    background: linear-gradient(180deg, #232117 0%, #1a1814 50%, #0e0e0f 100%);
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    margin: 0 -24px 0;
+}
+
+.piano-base {
+    height: 18px;
+    background: linear-gradient(180deg, #0e0e0f 0%, #1a1814 50%, #232117 100%);
+    border-top: 1px solid rgba(201,169,110,0.12);
+    margin: 0 -24px 0;
+}
+
+/* === PIANO KEYS CONTAINER === */
 .piano {
-  display: flex;
-  position: relative;
-  height: 240px;
+    display: flex;
+    position: relative;
+    height: 220px;
+    padding-top: 6px;
+    background: linear-gradient(180deg,
+        rgba(0,0,0,0.6) 0%,
+        rgba(0,0,0,0.2) 6px,
+        transparent 20px
+    );
+    gap: 0;
 }
 
+/* === KEYS === */
 .key {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 10px;
-  user-select: none;
-  cursor: pointer;
-  font-weight: bold;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    user-select: none;
+    cursor: pointer;
+    transition: background 0.06s ease, transform 0.06s ease, box-shadow 0.06s ease;
 }
 
+/* White Keys */
 .key.white {
-  background-color: white;
-  border: 1px solid #ccc;
-  width: 48px;
-  height: 100%;
-  border-radius: 0 0 4px 4px;
-  color: #666;
-  z-index: 1;
+    background: linear-gradient(180deg, var(--ivory-warm) 0%, var(--ivory) 40%, var(--ivory-dim) 100%);
+    border: 1px solid #b8b0a0;
+    border-top: none;
+    width: 46px;
+    flex-shrink: 0;
+    height: 100%;
+    border-radius: 0 0 6px 6px;
+    color: var(--gold-dim);
+    z-index: 1;
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.5),
+        inset 1px 0 0 rgba(0,0,0,0.05),
+        0 4px 12px rgba(0,0,0,0.4),
+        0 1px 0 #c0b89a;
 }
 
+.key.white .key-label {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #8a8070;
+    transition: opacity 0.2s ease;
+}
+
+/* Black Keys */
 .key.black {
-  background-color: #000;
-  width: 32px;
-  height: 60%;
-  margin-left: -16px;
-  margin-right: -16px;
-  z-index: 2;
-  border-radius: 0 0 4px 4px;
-  color: #fff;
+    background: linear-gradient(180deg, #2a2a2e 0%, #1a1a1e 30%, #0d0d10 100%);
+    width: 30px;
+    flex-shrink: 0;
+    height: 58%;
+    margin-left: -15px;
+    margin-right: -15px;
+    z-index: 2;
+    border-radius: 0 0 5px 5px;
+    color: rgba(255,255,255,0.4);
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.05),
+        inset 1px 0 0 rgba(255,255,255,0.03),
+        0 6px 16px rgba(0,0,0,0.7),
+        0 2px 4px rgba(0,0,0,0.5);
+    border: 1px solid #000;
+    border-top: none;
 }
 
-.key.active {
-  background-color: #ddd;
+.key.black .key-label {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: rgba(201,169,110,0.4);
+    transition: opacity 0.2s ease;
+}
+
+/* Active States */
+.key.white.active {
+    background: linear-gradient(180deg, #e8e0d0 0%, #ddd8cc 40%, #ccc6ba 100%);
+    transform: translateY(2px);
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.3),
+        0 1px 4px rgba(0,0,0,0.3),
+        0 0 20px rgba(201,169,110,0.12);
 }
 
 .key.black.active {
-  background-color: #333;
+    background: linear-gradient(180deg, #3a3a3e 0%, #2a2a2e 30%, #1a1a1e 100%);
+    transform: translateY(2px);
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.08),
+        0 2px 6px rgba(0,0,0,0.5),
+        0 0 16px rgba(201,169,110,0.1);
 }
 
-.key:hover {
-  background-color: #f0f0f0;
+/* Ripple animation */
+.key.white.active::after,
+.key.black.active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(ellipse at 50% 30%, rgba(201,169,110,0.15) 0%, transparent 70%);
+    animation: keyGlow 0.4s ease forwards;
 }
 
-.key.black:hover {
-  background-color: #222;
+@keyframes keyGlow {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Hover */
+.key.white:hover:not(.active) {
+    background: linear-gradient(180deg, #f0ece4 0%, var(--ivory) 40%, var(--ivory-dim) 100%);
+}
+
+.key.black:hover:not(.active) {
+    background: linear-gradient(180deg, #323236 0%, #222226 30%, #131316 100%);
+}
+
+/* Hidden labels */
+.key.labels-hidden .key-label {
+    opacity: 0;
+}
+
+/* === FOOTER === */
+.piano-footer {
+    background: linear-gradient(180deg, #121210 0%, #0f0f0d 100%);
+    border: 1px solid rgba(201,169,110,0.18);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 14px 24px 18px;
+}
+
+.note-display {
+    text-align: center;
+    margin-bottom: 14px;
+    min-height: 22px;
+}
+
+.note-hint {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(201,169,110,0.35);
+    letter-spacing: 0.06em;
+}
+
+.note-active {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+    animation: notePop 0.5s ease forwards;
+}
+
+@keyframes notePop {
+    0%   { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 0.5; transform: scale(1); }
+}
+
+/* Key hints row */
+.key-hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    justify-content: center;
+}
+
+.hint-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    color: var(--gold-dim);
+    font-family: var(--font-body);
+    letter-spacing: 0.04em;
+}
+
+kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 5px;
+    background: var(--ebony-lift);
+    border: 1px solid var(--ebony-edge);
+    border-bottom: 2px solid rgba(201,169,110,0.2);
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    color: var(--gold);
+    min-width: 18px;
+}
+
+/* === DIVIDER === */
+.piano-header::after {
+    display: none;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+    .piano-header {
+        flex-direction: column;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .piano-body {
+        padding: 0 10px 8px;
+    }
+
+    .key.white { width: 34px; }
+    .key.black { width: 22px; margin-left: -11px; margin-right: -11px; }
+
+    .piano { height: 170px; }
+
+    .key-hints { display: none; }
 }

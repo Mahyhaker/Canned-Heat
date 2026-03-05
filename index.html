@@ -4,43 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano Virtual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="piano-container">
-        <div class="piano-header">
-            <div class="title">Virtual Piano</div>
-            <div class="volume-control">
-                <span>Volume</span>
-                <input type="range" class="volume-slider" min="0" max="100" value="50">
-            </div>
-            <div class="keys-toggle">
-                <span>Teclas</span>
-                <div class="switch">
-                    <input type="checkbox" id="toggleKeys" checked>
+
+    <div class="ambient-glow"></div>
+
+    <div class="piano-wrapper">
+
+        <header class="piano-header">
+            <div class="brand">
+                <span class="brand-icon">♩</span>
+                <div>
+                    <h1 class="title">Piano Virtual</h1>
+                    <p class="subtitle">Concert Grand</p>
                 </div>
             </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">Volume</label>
+                    <div class="slider-track">
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+                        <span class="volume-value" id="volumeValue">50%</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Teclas</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggleKeys" checked>
+                        <span class="toggle-track">
+                            <span class="toggle-thumb"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <div class="piano-body">
+            <div class="piano-lid"></div>
+            <div class="piano" id="piano">
+                <!-- Oitava 1 -->
+                <div class="key white" data-key="A"><span class="key-label">A</span></div>
+                <div class="key black" data-key="W"><span class="key-label">W</span></div>
+                <div class="key white" data-key="S"><span class="key-label">S</span></div>
+                <div class="key black" data-key="E"><span class="key-label">E</span></div>
+                <div class="key white" data-key="D"><span class="key-label">D</span></div>
+                <div class="key white" data-key="F"><span class="key-label">F</span></div>
+                <div class="key black" data-key="T"><span class="key-label">T</span></div>
+                <div class="key white" data-key="G"><span class="key-label">G</span></div>
+                <div class="key black" data-key="Y"><span class="key-label">Y</span></div>
+                <div class="key white" data-key="H"><span class="key-label">H</span></div>
+                <div class="key black" data-key="U"><span class="key-label">U</span></div>
+                <div class="key white" data-key="J"><span class="key-label">J</span></div>
+                <div class="key white" data-key="K"><span class="key-label">K</span></div>
+                <div class="key black" data-key="O"><span class="key-label">O</span></div>
+                <div class="key white" data-key="L"><span class="key-label">L</span></div>
+                <div class="key black" data-key="P"><span class="key-label">P</span></div>
+                <div class="key white" data-key="Ç"><span class="key-label">Ç</span></div>
+            </div>
+            <div class="piano-base"></div>
         </div>
-        <div class="piano">
-            <div class="key white" data-key="A">A</div>
-            <div class="key black" data-key="W">W</div>
-            <div class="key white" data-key="S">S</div>
-            <div class="key black" data-key="E">E</div>
-            <div class="key white" data-key="D">D</div>
-            <div class="key white" data-key="F">F</div>
-            <div class="key black" data-key="T">T</div>
-            <div class="key white" data-key="G">G</div>
-            <div class="key black" data-key="Y">Y</div>
-            <div class="key white" data-key="H">H</div>
-            <div class="key black" data-key="U">U</div>
-            <div class="key white" data-key="J">J</div>
-            <div class="key white" data-key="K">K</div>
-            <div class="key black" data-key="O">O</div>
-            <div class="key white" data-key="L">L</div>
-            <div class="key black" data-key="P">P</div>
-            <div class="key white" data-key="Ç">Ç</div>
-        </div>
+
+        <footer class="piano-footer">
+            <div class="note-display" id="noteDisplay">
+                <span class="note-hint">Toque uma tecla ou clique no piano</span>
+            </div>
+            <div class="key-hints">
+                <span class="hint-item"><kbd>A</kbd> Dó</span>
+                <span class="hint-item"><kbd>W</kbd> Dó#</span>
+                <span class="hint-item"><kbd>S</kbd> Ré</span>
+                <span class="hint-item"><kbd>E</kbd> Ré#</span>
+                <span class="hint-item"><kbd>D</kbd> Mi</span>
+                <span class="hint-item"><kbd>F</kbd> Fá</span>
+                <span class="hint-item"><kbd>T</kbd> Fá#</span>
+                <span class="hint-item"><kbd>G</kbd> Sol</span>
+                <span class="hint-item"><kbd>Y</kbd> Sol#</span>
+                <span class="hint-item"><kbd>H</kbd> Lá</span>
+                <span class="hint-item"><kbd>U</kbd> Lá#</span>
+                <span class="hint-item"><kbd>J</kbd> Si</span>
+                <span class="hint-item"><kbd>K</kbd> Dó</span>
+            </div>
+        </footer>
+
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
